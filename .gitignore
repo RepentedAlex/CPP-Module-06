@@ -30,3 +30,11 @@
 *.exe
 *.out
 *.app
+
+.cache_exists
+.clangd
+
+ScalarConverter
+Serializer
+real_type
+tags
