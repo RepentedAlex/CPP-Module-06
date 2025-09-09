@@ -1,12 +1,8 @@
-/// @file Data.hpp
-/// @brief
-
 #ifndef DATA_HPP
 #define DATA_HPP
 
 #include <string>
 
-/// @class Data
 class	Data {
 public:
 	Data();
@@ -23,7 +19,6 @@ public:
 
 private:
 	std::string	name_;
-
 };
 
 #endif // !DATA_HPP
