@@ -3,14 +3,6 @@
 #include "Serializer.hpp"
 
 int	main() {
-	Data	data;
-
-	if (&data == Serializer::deserialize(Serializer::serialize(&data))) {
-		std::cout << data.getName() << std::endl;
-	} else {
-		std::cout << "Serialisation failed." << std::endl;
-	}
-
 	PRINT_SECTION("Testing serialisation and deserialisation");
 	{
 		Data		valid;
