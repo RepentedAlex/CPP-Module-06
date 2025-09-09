@@ -1,12 +1,14 @@
 #include "ScalarConverter.hpp"
 
-#include <cerrno>
+#include <errno.h>
+
 #include <cmath>
 #include <cstdlib>
 #include <iomanip>
 #include <iostream>
 #include <limits>
 
+static void	displayCasts(double value);
 static bool	isChar(const std::string& s);
 static bool	isDouble(const std::string& s);
 static bool	isFloat(const std::string& s);
@@ -41,7 +43,6 @@ static bool	isDouble(const std::string& s) {
 	char*	ptr;
 	double	num;
 
-	(void)num;
 	if (s.empty()) {
 		return (false);
 	}
@@ -84,14 +85,13 @@ static bool	isInt(const std::string& s) {
 			return (false);
 		}
 	}
-
 	for (; i < s.length() ; i++) {
 		if (!std::isdigit(s[i])) {
 			return (false);
 		}
 	}
 	errno = 0;
-	std::strtol(s.c_str(), &ptr, 10);
+	std::strtol(s.c_str(), &ptr, 10);	// 10 -> base to convert to.
 	if (*ptr != '\0' || errno == ERANGE) {
 		return (false);
 	}
@@ -111,7 +111,7 @@ static void	printChar(double value) {
 	std::cout << "char: ";
 	if (std::isnan(value) || std::isinf(value) || value < 0  || value > 127) {
 		std::cout << "impossible" << std::endl;
-	} else if (value < 32 || value == 127) {
+	} else if (value < 32 || value == 127) {	// Accounts for non printable characters.
 		std::cout << "non displayable" << std::endl;
 	} else {
 		std::cout << static_cast<char>(value) << std::endl;
@@ -169,6 +169,13 @@ static void	printInt(double value) {
 	}
 }
 
+static void	displayCasts(double value) {
+	printChar(static_cast<double>(value));
+	printInt(static_cast<double>(value));
+	printFloat(static_cast<double>(value));
+	printDouble(static_cast<double>(value));
+}
+
 void	ScalarConverter::convert(const std::string& literal) {
 	if (isPseudoLiteral(literal)) {
 		if (literal == "nan" || literal == "nanf") {
@@ -189,28 +196,16 @@ void	ScalarConverter::convert(const std::string& literal) {
 		}
 	} else if (isChar(literal)) {
 		char	c = literal[1];
-		printChar(static_cast<double>(c));
-		printInt(static_cast<double>(c));
-		printFloat(static_cast<double>(c));
-		printDouble(static_cast<double>(c));
+		displayCasts(static_cast<double>(c));
 	} else if (isInt(literal)) {
 		int	i = std::atoi(literal.c_str());
-		printChar(static_cast<double>(i));
-		printInt(static_cast<double>(i));
-		printFloat(static_cast<double>(i));
-		printDouble(static_cast<double>(i));
+		displayCasts(static_cast<double>(i));
 	} else if (isFloat(literal)) {
 		float	f = std::atof(literal.c_str());
-		printChar(static_cast<double>(f));
-		printInt(static_cast<double>(f));
-		printFloat(static_cast<double>(f));
-		printDouble(static_cast<double>(f));
+		displayCasts(static_cast<double>(f));
 	} else if (isDouble(literal)) {
 		double	d = std::strtod(literal.c_str(), NULL);
-		printChar(static_cast<double>(d));
-		printInt(static_cast<double>(d));
-		printFloat(static_cast<double>(d));
-		printDouble(static_cast<double>(d));
+		displayCasts(static_cast<double>(d));
 	}
 	else {
 		std::cout << "Error: Invalid literal" << std::endl;

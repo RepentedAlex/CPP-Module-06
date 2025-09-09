@@ -1,17 +1,14 @@
-/// @file ScalarConverter.hpp
-/// @brief
-
 #ifndef SCALARCONVERTER_HPP
 #define SCALARCONVERTER_HPP
 
 #include <string>
 
 /// @class ScalarConverter
-/// @brief
+/// @brief Class implementing a static function to convert C++ literals interchangeably.
 class	ScalarConverter {
 public:
-	/// @brief
-	/// @param string
+	/// @brief Converts a C++ literal to char, int, float and double.
+	/// @param string The C++ literal passed as a string.
 	static void	convert(const std::string& string);
 
 private:
@@ -19,14 +16,14 @@ private:
 	ScalarConverter();
 
 	/// @brief Copy constructor.
-	/// @param original
+	/// @param original The ScalarConverter we want to copy from.
 	ScalarConverter(const ScalarConverter& original);
 
 	/// @brief Destructor.
 	~ScalarConverter();
 
 	/// @brief Assignment operator overload.
-	/// @param original
+	/// @param original The ScalarConverter instance we want to assign from
 	/// @return A reference to a ScalarConverter instance.
 	ScalarConverter&	operator=(const ScalarConverter& original);
 };
