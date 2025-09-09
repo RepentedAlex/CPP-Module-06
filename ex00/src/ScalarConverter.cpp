@@ -30,8 +30,8 @@ ScalarConverter::~ScalarConverter() {
 }
 
 static bool	isChar(const std::string& s) {
-	if (s.length() == 3 && s[0] == '\'' && s[2] == '\'') {	// I take it that a \
-															char literal is between single quotes.
+	if (s.length() == 3 && s[0] == '\'' && s[2] == '\'') {	// I take it that a
+															// char literal is between single quotes.
 		return (true);
 	}
 	return (false);
